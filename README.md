@@ -1,19 +1,19 @@
-# 📘 Minha API Oracle
+Minha API Oracle
 
-## 🚀 Descrição do Projeto
+DescriçãoÇ
 
-Este projeto é uma **API RESTful** desenvolvida com **ASP.NET Core** e integração com banco de dados **Oracle** via **Entity Framework Core**. A aplicação simula um sistema de gerenciamento de estacionamento de motos, com cadastros de:
+Este projeto que simula um sistema de gerenciamento de estacionamento de motos, com cadastros de:
 
 - Clientes  
 - Endereços  
 - Motos  
 - Vagas  
 
-A documentação da API está disponível via **Swagger (OpenAPI)** e todas as operações básicas de um CRUD estão implementadas.
+A documentação da API está disponível via Swagger
 
 ---
 
-## 🔁 Rotas da API
+Rotas da API:
 
 ### Clientes
 | Método | Rota                  | Descrição                 |
@@ -29,15 +29,14 @@ As rotas seguem o mesmo padrão acima com os respectivos endpoints `/api/Enderec
 
 ---
 
-## 🛠️ Instalação e Execução
+Instalação e Execução:
 
-### Requisitos
+Requisitos:
 - .NET SDK 9.0
-- Acesso a um banco Oracle (ex: FIAP)
-- Visual Studio Code ou Visual Studio
+- Acesso a um Banco de Dados Oracle
+- Visual Studio Code
 
-### Clonando o projeto
-
+Clonando o projeto:
 ```bash
-git clone https://github.com/vitorkenzooMinhaApiOracle.git
+git clone https://github.com/vitorkenzoo/MinhaApiOracle.git
 cd MinhaApiOracle
