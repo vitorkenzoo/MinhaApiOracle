@@ -1,0 +1,12 @@
+{
+  "Version": 1,
+  "Hash": "1SsapmhCVSjQFkcWFtwxuMRRk1u8jjDCOtbUxamcNJk=",
+  "Source": "MinhaApiOracle",
+  "BasePath": "_content/MinhaApiOracle",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": [],
+  "Endpoints": []
+}

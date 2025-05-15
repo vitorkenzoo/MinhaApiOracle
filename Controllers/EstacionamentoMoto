@@ -1,0 +1,75 @@
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using MinhaApiOracle.Data;
+using MinhaApiOracle.Models;
+
+namespace MinhaApiOracle.Controllers
+{
+    [ApiController]
+    [Route("api/[controller]")]
+    public class EstacionamentoMotosController : ControllerBase
+    {
+        private readonly AppDb _context;
+
+        public EstacionamentoMotosController(AppDb context)
+        {
+            _context = context;
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
+        {
+            var estacionamentos = await _context.EstacionamentoMotos
+                .Include(e => e.Moto)
+                .Include(e => e.Vaga)
+                .ToListAsync();
+            return Ok(estacionamentos);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(int id)
+        {
+            var estacionamento = await _context.EstacionamentoMotos
+                .Include(e => e.Moto)
+                .Include(e => e.Vaga)
+                .FirstOrDefaultAsync(e => e.Id == id);
+
+            if (estacionamento == null) return NotFound();
+            return Ok(estacionamento);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(EstacionamentoMoto estacionamentoMoto)
+        {
+            _context.EstacionamentoMotos.Add(estacionamentoMoto);
+            await _context.SaveChangesAsync();
+            return CreatedAtAction(nameof(GetById), new { id = estacionamentoMoto.Id }, estacionamentoMoto);
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(int id, EstacionamentoMoto estacionamentoMoto)
+        {
+            if (id != estacionamentoMoto.Id) return BadRequest();
+
+            var exists = await _context.EstacionamentoMotos.AnyAsync(e => e.Id == id);
+            if (!exists) return NotFound();
+
+            _context.Entry(estacionamentoMoto).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var estacionamento = await _context.EstacionamentoMotos.FindAsync(id);
+            if (estacionamento == null) return NotFound();
+
+            _context.EstacionamentoMotos.Remove(estacionamento);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+    }
+}
