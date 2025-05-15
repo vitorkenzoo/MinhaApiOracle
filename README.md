@@ -1,6 +1,6 @@
 Minha API Oracle
 
-DescriçãoÇ
+Descrição:
 
 Este projeto que simula um sistema de gerenciamento de estacionamento de motos, com cadastros de:
 
