@@ -42,4 +42,4 @@ git clone https://github.com/vitorkenzoo/MinhaApiOracle.git
 cd MinhaApiOracle
 dotnet restore
 dotnet run
-// Acessar a porta que liberar e adicionar um "/Swagger" //
+// Acessar a porta que liberar e adicionar um "/Swagger" // provavelmente será http://localhost:8080/swagger/index.html
