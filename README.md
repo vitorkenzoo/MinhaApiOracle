@@ -32,7 +32,7 @@ As rotas seguem o mesmo padrão acima com os respectivos endpoints `/api/Enderec
 Instalação e Execução:
 
 Requisitos:
-- .NET SDK 9.0
+- .NET SDK 8.0
 - Acesso a um Banco de Dados Oracle
 - Visual Studio Code
 
