@@ -36,7 +36,10 @@ Requisitos:
 - Acesso a um Banco de Dados Oracle
 - Visual Studio Code
 
-Clonando o projeto:
+Rodando o Projeto:
 ```bash
 git clone https://github.com/vitorkenzoo/MinhaApiOracle.git
 cd MinhaApiOracle
+dotnet restore
+dotnet run
+// Acessar a porta que liberar e adicionar um "/Swagger" //
