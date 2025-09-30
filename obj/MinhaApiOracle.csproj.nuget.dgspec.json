@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Vitor Mizumoto\\MinhaApiOracle\\MinhaApiOracle.csproj": {}
+    "C:\\Users\\VITOR\\as\\MinhaApiOracle\\MinhaApiOracle.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Vitor Mizumoto\\MinhaApiOracle\\MinhaApiOracle.csproj": {
+    "C:\\Users\\VITOR\\as\\MinhaApiOracle\\MinhaApiOracle.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Vitor Mizumoto\\MinhaApiOracle\\MinhaApiOracle.csproj",
+        "projectUniqueName": "C:\\Users\\VITOR\\as\\MinhaApiOracle\\MinhaApiOracle.csproj",
         "projectName": "MinhaApiOracle",
-        "projectPath": "C:\\Users\\Vitor Mizumoto\\MinhaApiOracle\\MinhaApiOracle.csproj",
-        "packagesPath": "C:\\Users\\Vitor Mizumoto\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Vitor Mizumoto\\MinhaApiOracle\\obj\\",
+        "projectPath": "C:\\Users\\VITOR\\as\\MinhaApiOracle\\MinhaApiOracle.csproj",
+        "packagesPath": "C:\\Users\\VITOR\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\VITOR\\as\\MinhaApiOracle\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Vitor Mizumoto\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\VITOR\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net9.0"
@@ -38,7 +38,7 @@
           "auditLevel": "low",
           "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "9.0.200"
+        "SdkAnalysisLevel": "9.0.300"
       },
       "frameworks": {
         "net9.0": {
@@ -90,7 +90,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.201/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.305/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
