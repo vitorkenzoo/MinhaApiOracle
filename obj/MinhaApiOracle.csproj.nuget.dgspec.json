@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\VITOR\\as\\MinhaApiOracle\\MinhaApiOracle.csproj": {}
+    "C:\\Users\\VITOR\\azul\\MinhaApiOracle\\MinhaApiOracle.csproj": {}
   },
   "projects": {
-    "C:\\Users\\VITOR\\as\\MinhaApiOracle\\MinhaApiOracle.csproj": {
+    "C:\\Users\\VITOR\\azul\\MinhaApiOracle\\MinhaApiOracle.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\VITOR\\as\\MinhaApiOracle\\MinhaApiOracle.csproj",
+        "projectUniqueName": "C:\\Users\\VITOR\\azul\\MinhaApiOracle\\MinhaApiOracle.csproj",
         "projectName": "MinhaApiOracle",
-        "projectPath": "C:\\Users\\VITOR\\as\\MinhaApiOracle\\MinhaApiOracle.csproj",
+        "projectPath": "C:\\Users\\VITOR\\azul\\MinhaApiOracle\\MinhaApiOracle.csproj",
         "packagesPath": "C:\\Users\\VITOR\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\VITOR\\as\\MinhaApiOracle\\obj\\",
+        "outputPath": "C:\\Users\\VITOR\\azul\\MinhaApiOracle\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\VITOR\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -46,25 +46,17 @@
           "dependencies": {
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",
-              "version": "[9.0.3, )"
+              "version": "[9.0.10, )"
             },
-            "Microsoft.EntityFrameworkCore": {
+            "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
-              "version": "[7.0.0, )"
+              "version": "[9.0.10, )"
             },
-            "Microsoft.EntityFrameworkCore.Design": {
+            "Microsoft.EntityFrameworkCore.Tools": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[7.0.0, )"
-            },
-            "Microsoft.EntityFrameworkCore.Relational": {
-              "target": "Package",
-              "version": "[7.0.0, )"
-            },
-            "Oracle.EntityFrameworkCore": {
-              "target": "Package",
-              "version": "[7.21.8, )"
+              "version": "[9.0.10, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
