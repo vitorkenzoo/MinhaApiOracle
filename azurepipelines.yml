@@ -89,15 +89,14 @@ stages:
     steps:
     # 1. Fazer Deploy no Azure Web App (Esta tarefa usa 'azurerm' - está CORRETO)
     # Requisito 7-VII (Deploy em Azure Web App ou ACI)
+    # === CORREÇÃO DE ERRO DE DEPLOY ===
     - task: AzureWebAppContainer@1
       displayName: 'Deploy: Azure Web App'
       inputs:
         azureSubscription: '$(azureSubscription)'
         appName: '$(webAppName)'
         resourceGroupName: '$(resourceGroup)'
-        containerRegistry: '$(acrName).azurecr.io'
-        repository: '$(imageName)'
-        tag: '$(tag)'
+        imageName: '$(acrName).azurecr.io/$(imageName):$(tag)' # Passa o nome completo da imagem
         
     # 2. Configurar a String de Conexão (Esta tarefa usa 'azurerm' - está CORRETO)
     # Requisito 7-IV
