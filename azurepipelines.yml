@@ -1,25 +1,17 @@
-# Gatilho: Este pipeline vai rodar sempre que houver um push na branch 'master'
-# Requisito 7-II
 trigger:
 - master
 
-# Variáveis: Substitua pelos nomes dos seus recursos do Azure
 variables:
-  # === SUBSTITUIÇÃO FEITA ===
-  azureSubscription: 'ConexaoAzureStudents' # Conexão de Serviço do Azure (tipo azurerm)
-  # === CRIE ESTA NOVA CONEXÃO ===
-  dockerRegistryServiceConnection: 'ConexaoACR' # Conexão de Serviço do Docker (tipo dockerregistry)
-  
-  acrName: 'acrsprint4vitor'                      # O nome do seu Container Registry
-  webAppName: 'app-sprint4-vitor'                 # O nome do seu Web App
-  resourceGroup: 'rg-sprint4-fiap'                # O grupo de recursos que você criou
-  # === NÃO MUDE AQUI ===
-  imageName: 'minhaapioracle'                     # O nome da imagem (como definimos no portal)
+  azureSubscription: 'ConexaoAzureStudents'
+  dockerRegistryServiceConnection: 'ConexaoACR' 
+  acrName: 'acrsprint4vitor'                    
+  webAppName: 'app-sprint4-vitor'                 
+  resourceGroup: 'rg-sprint4-fiap'              
+  imageName: 'minhaapioracle'                  
   dockerfilePath: '$(Build.SourcesDirectory)/Dockerfile'
   vmImageName: 'ubuntu-latest'
-  tag: '$(Build.BuildId)' # Usa um número único para a tag da imagem
+  tag: '$(Build.BuildId)'
 
-# Estágios do Pipeline (CI e CD)
 stages:
 - stage: CI_Build_e_Test
   displayName: 'Estágio 1: Build, Teste e Push (CI)'
@@ -30,46 +22,34 @@ stages:
       vmImage: $(vmImageName)
     
     steps:
-    # 1. Build da Imagem Docker (usa o Dockerfile do seu projeto)
-    # Requisito 7-VIII (Uso de Docker)
     - task: Docker@2
       displayName: 'Build da imagem Docker'
       inputs:
         command: 'build'
         repository: '$(imageName)'
         dockerfile: '$(dockerfilePath)'
-        # === CORREÇÃO FINAL AQUI ===
-        # Usa a Conexão de Serviço do tipo 'dockerregistry'
         containerRegistry: '$(dockerRegistryServiceConnection)' 
         tags: |
           $(tag)
           latest
-    
-    # 2. Etapa de Testes (simulada, pois não temos testes unitários no projeto)
-    # Requisito 7-VI (Etapa de testes)
+  
     - script: |
         echo "Iniciando etapa de testes..."
         # (Aqui entrariam os comandos 'dotnet test', se houvesse um projeto de teste)
         echo "Testes concluídos com sucesso (simulado)."
       displayName: 'Executar Testes (Simulado)'
-      
-    # 3. Publicar Artefato de Teste (simulado)
-    # Requisito 7-V (Publicação do artefato)
+
     - task: PublishTestResults@2
       displayName: 'Publicar Resultados de Teste (Simulado)'
       inputs:
-        testResultsFormat: 'JUnit' # Apenas para simular a etapa
-        testResultsFiles: '**/TEST-*.xml' # Apenas para simular
+        testResultsFormat: 'JUnit'
+        testResultsFiles: '**/TEST-*.xml' 
         failTaskOnFailedTests: true
-      
-    # 4. Push da Imagem para o Azure Container Registry (ACR)
     - task: Docker@2
       displayName: 'Push da imagem para o ACR'
       inputs:
         command: 'push'
         repository: '$(imageName)'
-        # === CORREÇÃO FINAL AQUI ===
-        # Usa a Conexão de Serviço do tipo 'dockerregistry'
         containerRegistry: '$(dockerRegistryServiceConnection)'
         tags: |
           $(tag)
@@ -77,7 +57,7 @@ stages:
 
 - stage: CD_Deploy
   displayName: 'Estágio 2: Deploy no Web App (CD)'
-  dependsOn: CI_Build_e_Test # Só roda se o Estágio 1 (CI) for bem-sucedido
+  dependsOn: CI_Build_e_Test 
   condition: succeeded()
   
   jobs:
@@ -87,34 +67,12 @@ stages:
       vmImage: $(vmImageName)
       
     steps:
-    # 1. Fazer Deploy no Azure Web App (Esta tarefa usa 'azurerm' - está CORRETO)
-    # Requisito 7-VII (Deploy em Azure Web App ou ACI)
-    # === CORREÇÃO DE ERRO DE DEPLOY ===
     - task: AzureWebAppContainer@1
       displayName: 'Deploy: Azure Web App'
       inputs:
         azureSubscription: '$(azureSubscription)'
         appName: '$(webAppName)'
         resourceGroupName: '$(resourceGroup)'
-        imageName: '$(acrName).azurecr.io/$(imageName):$(tag)' # Passa o nome completo da imagem
+        imageName: '$(acrName).azurecr.io/$(imageName):$(tag)' 
         
-    # === ETAPA COM ERRO 403 DESATIVADA ===
-    # A etapa 2 foi desativada para evitar o erro de permissão (403).
-    # Você DEVE configurar a string de conexão manualmente no Portal do Azure.
-    # 2. Configurar a String de Conexão (Esta tarefa usa 'azurerm' - está CORRETO)
-    # Requisito 7-IV
-    # - task: AzureAppServiceSettings@1
-    #   displayName: 'Configurar String de Conexão no Web App'
-    #   inputs:
-    #     azureSubscription: '$(azureSubscription)'
-    #     appName: '$(webAppName)'
-    #     resourceGroupName: '$(resourceGroup)'
-    #     appSettings: |
-    #       [
-    #         {
-    #           "name": "ConnectionStrings:SqlAzureConnection",
-    #           "value": "$(DB_CONNECTION_STRING)",
-    #           "slotSetting": false
-    #         }
-    #       ]
 
