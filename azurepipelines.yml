@@ -98,20 +98,23 @@ stages:
         resourceGroupName: '$(resourceGroup)'
         imageName: '$(acrName).azurecr.io/$(imageName):$(tag)' # Passa o nome completo da imagem
         
+    # === ETAPA COM ERRO 403 DESATIVADA ===
+    # A etapa 2 foi desativada para evitar o erro de permissão (403).
+    # Você DEVE configurar a string de conexão manualmente no Portal do Azure.
     # 2. Configurar a String de Conexão (Esta tarefa usa 'azurerm' - está CORRETO)
     # Requisito 7-IV
-    - task: AzureAppServiceSettings@1
-      displayName: 'Configurar String de Conexão no Web App'
-      inputs:
-        azureSubscription: '$(azureSubscription)'
-        appName: '$(webAppName)'
-        resourceGroupName: '$(resourceGroup)'
-        appSettings: |
-          [
-            {
-              "name": "ConnectionStrings:SqlAzureConnection",
-              "value": "$(DB_CONNECTION_STRING)",
-              "slotSetting": false
-            }
-          ]
+    # - task: AzureAppServiceSettings@1
+    #   displayName: 'Configurar String de Conexão no Web App'
+    #   inputs:
+    #     azureSubscription: '$(azureSubscription)'
+    #     appName: '$(webAppName)'
+    #     resourceGroupName: '$(resourceGroup)'
+    #     appSettings: |
+    #       [
+    #         {
+    #           "name": "ConnectionStrings:SqlAzureConnection",
+    #           "value": "$(DB_CONNECTION_STRING)",
+    #           "slotSetting": false
+    #         }
+    #       ]
 
