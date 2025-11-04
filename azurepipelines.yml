@@ -1,12 +1,15 @@
 trigger:
   branches:
     include:
-    - main # 
+    - main 
   paths:
     include:
-    - MinhaApiOracle/*
-    - README.md        
+    - MinhaApiOracle/* 
+    - README.md         
     - azure-pipelines.yml 
+    - Dockerfile        
+    - "*.csproj"        
+
 
 variables:
   azureSubscription: 'ConexaoAzureStudents'
@@ -14,11 +17,9 @@ variables:
   webAppName: 'app-sprint4-vitor'
   containerRegistry: 'acrsprint4vitor.azurecr.io'
   resourceGroup: 'rg-sprint4-fiap'
-
   imageRepository: 'minhaapioracle'
-  dockerfilePath: '$(Build.SourcesDirectory)/MinhaApiOracle/Dockerfile'
+  dockerfilePath: '$(Build.SourcesDirectory)/Dockerfile'
   tag: '$(Build.BuildId)' 
-
   vmImageName: 'ubuntu-latest'
   buildConfiguration: 'Release'
 
@@ -32,6 +33,7 @@ stages:
       vmImage: $(vmImageName)
 
     steps:
+
     - task: Docker@2
       displayName: 'Build da imagem Docker'
       inputs:
@@ -39,10 +41,11 @@ stages:
         containerRegistry: $(dockerRegistryServiceConnection)
         repository: $(imageRepository)
         dockerfile: $(dockerfilePath)
-        buildContext: '$(Build.SourcesDirectory)/MinhaApiOracle'
+        buildContext: '$(Build.SourcesDirectory)'
         tags: |
           $(tag)
           latest
+
     - task: PublishTestResults@2
       displayName: 'Publicar Resultados de Teste (Simulado)'
       inputs:
@@ -50,8 +53,6 @@ stages:
         testResultsFiles: '**/TEST-*.xml'
         failTaskOnFailedTests: false
       continueOnError: true
-
-
     - task: Docker@2
       displayName: 'Push da imagem para o ACR'
       inputs:
@@ -61,8 +62,6 @@ stages:
         tags: |
           $(tag)
           latest
-
-
 
 - stage: CD_Deploy
   displayName: 'Estágio 2: Deploy no Web App (CD)'
