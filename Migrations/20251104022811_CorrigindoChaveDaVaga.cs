@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace MinhaApiOracle.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialAzureSQL : Migration
+    public partial class CorrigindoChaveDaVaga : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -65,8 +65,9 @@ namespace MinhaApiOracle.Migrations
                 name: "Vagas",
                 columns: table => new
                 {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Numero = table.Column<int>(type: "int", nullable: false),
-                    Id = table.Column<int>(type: "int", nullable: false),
                     Ocupado = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>

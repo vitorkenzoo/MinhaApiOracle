@@ -12,8 +12,8 @@ using MinhaApiOracle.Data;
 namespace MinhaApiOracle.Migrations
 {
     [DbContext(typeof(AppDb))]
-    [Migration("20251103224750_InitialAzureSQL")]
-    partial class InitialAzureSQL
+    [Migration("20251104022811_CorrigindoChaveDaVaga")]
+    partial class CorrigindoChaveDaVaga
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -151,7 +151,10 @@ namespace MinhaApiOracle.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Ocupado")
                         .IsRequired()
