@@ -6,7 +6,10 @@ trigger:
 # Variáveis: Substitua pelos nomes dos seus recursos do Azure
 variables:
   # === SUBSTITUIÇÃO FEITA ===
-  azureSubscription: 'ConexaoAzureStudents' # Nome da sua Conexão de Serviço
+  azureSubscription: 'ConexaoAzureStudents' # Conexão de Serviço do Azure (tipo azurerm)
+  # === CRIE ESTA NOVA CONEXÃO ===
+  dockerRegistryServiceConnection: 'ConexaoACR' # Conexão de Serviço do Docker (tipo dockerregistry)
+  
   acrName: 'acrsprint4vitor'                      # O nome do seu Container Registry
   webAppName: 'app-sprint4-vitor'                 # O nome do seu Web App
   resourceGroup: 'rg-sprint4-fiap'                # O grupo de recursos que você criou
@@ -35,9 +38,9 @@ stages:
         command: 'build'
         repository: '$(imageName)'
         dockerfile: '$(dockerfilePath)'
-        # === CORREÇÃO AQUI ===
-        # Usa a Conexão de Serviço principal para autenticar no Docker
-        containerRegistry: '$(azureSubscription)' 
+        # === CORREÇÃO FINAL AQUI ===
+        # Usa a Conexão de Serviço do tipo 'dockerregistry'
+        containerRegistry: '$(dockerRegistryServiceConnection)' 
         tags: |
           $(tag)
           latest
@@ -65,9 +68,9 @@ stages:
       inputs:
         command: 'push'
         repository: '$(imageName)'
-        # === CORREÇÃO AQUI ===
-        # Usa a Conexão de Serviço principal para autenticar no Docker
-        containerRegistry: '$(azureSubscription)'
+        # === CORREÇÃO FINAL AQUI ===
+        # Usa a Conexão de Serviço do tipo 'dockerregistry'
+        containerRegistry: '$(dockerRegistryServiceConnection)'
         tags: |
           $(tag)
           latest
@@ -84,7 +87,7 @@ stages:
       vmImage: $(vmImageName)
       
     steps:
-    # 1. Fazer Deploy no Azure Web App
+    # 1. Fazer Deploy no Azure Web App (Esta tarefa usa 'azurerm' - está CORRETO)
     # Requisito 7-VII (Deploy em Azure Web App ou ACI)
     - task: AzureWebAppContainer@1
       displayName: 'Deploy: Azure Web App'
@@ -96,9 +99,8 @@ stages:
         repository: '$(imageName)'
         tag: '$(tag)'
         
-    # 2. Configurar a String de Conexão (Requisito 7-IV)
-    # Esta é a etapa de segurança. Ela pega a variável secreta do pipeline
-    # e a injeta como configuração de ambiente no Web App.
+    # 2. Configurar a String de Conexão (Esta tarefa usa 'azurerm' - está CORRETO)
+    # Requisito 7-IV
     - task: AzureAppServiceSettings@1
       displayName: 'Configurar String de Conexão no Web App'
       inputs:
