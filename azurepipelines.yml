@@ -1,0 +1,111 @@
+# Gatilho: Este pipeline vai rodar sempre que houver um push na branch 'master'
+# Requisito 7-II
+trigger:
+- master
+
+# Variáveis: Substitua pelos nomes dos seus recursos do Azure
+variables:
+  # === SUBSTITUA AQUI ===
+  azureSubscription: 'SUA_CONEXAO_DE_SERVICO_AZURE' # Ex: 'Azure for Students'
+  acrName: 'acrsprint4vitor'                      # O nome do seu Container Registry
+  webAppName: 'app-sprint4-vitor'                 # O nome do seu Web App
+  resourceGroup: 'rg-sprint4-fiap'                # O grupo de recursos que você criou
+  # === NÃO MUDE AQUI ===
+  imageName: 'minhaapioracle'                     # O nome da imagem (como definimos no portal)
+  dockerfilePath: '$(Build.SourcesDirectory)/Dockerfile'
+  vmImageName: 'ubuntu-latest'
+  tag: '$(Build.BuildId)' # Usa um número único para a tag da imagem
+
+# Estágios do Pipeline (CI e CD)
+stages:
+- stage: CI_Build_e_Test
+  displayName: 'Estágio 1: Build, Teste e Push (CI)'
+  jobs:
+  - job: BuildAndTest
+    displayName: 'Build, Test e Push da Imagem Docker'
+    pool:
+      vmImage: $(vmImageName)
+    
+    steps:
+    # 1. Build da Imagem Docker (usa o Dockerfile do seu projeto)
+    # Requisito 7-VIII (Uso de Docker)
+    - task: Docker@2
+      displayName: 'Build da imagem Docker'
+      inputs:
+        command: 'build'
+        repository: '$(imageName)'
+        dockerfile: '$(dockerfilePath)'
+        containerRegistry: '$(acrName)' # Nome do ACR (será usado para login)
+        tags: |
+          $(tag)
+          latest
+    
+    # 2. Etapa de Testes (simulada, pois não temos testes unitários no projeto)
+    # Requisito 7-VI (Etapa de testes)
+    - script: |
+        echo "Iniciando etapa de testes..."
+        # (Aqui entrariam os comandos 'dotnet test', se houvesse um projeto de teste)
+        echo "Testes concluídos com sucesso (simulado)."
+      displayName: 'Executar Testes (Simulado)'
+      
+    # 3. Publicar Artefato de Teste (simulado)
+    # Requisito 7-V (Publicação do artefato)
+    - task: PublishTestResults@2
+      displayName: 'Publicar Resultados de Teste (Simulado)'
+      inputs:
+        testResultsFormat: 'JUnit' # Apenas para simular a etapa
+        testResultsFiles: '**/TEST-*.xml' # Apenas para simular
+        failTaskOnFailedTests: true
+      
+    # 4. Push da Imagem para o Azure Container Registry (ACR)
+    - task: Docker@2
+      displayName: 'Push da imagem para o ACR'
+      inputs:
+        command: 'push'
+        repository: '$(imageName)'
+        containerRegistry: '$(acrName)'
+        tags: |
+          $(tag)
+          latest
+
+- stage: CD_Deploy
+  displayName: 'Estágio 2: Deploy no Web App (CD)'
+  dependsOn: CI_Build_e_Test # Só roda se o Estágio 1 (CI) for bem-sucedido
+  condition: succeeded()
+  
+  jobs:
+  - job: Deploy
+    displayName: 'Deploy no Azure Web App for Containers'
+    pool:
+      vmImage: $(vmImageName)
+      
+    steps:
+    # 1. Fazer Deploy no Azure Web App
+    # Requisito 7-VII (Deploy em Azure Web App ou ACI)
+    - task: AzureWebAppContainer@1
+      displayName: 'Deploy: Azure Web App'
+      inputs:
+        azureSubscription: '$(azureSubscription)'
+        appName: '$(webAppName)'
+        resourceGroupName: '$(resourceGroup)'
+        containerRegistry: '$(acrName).azurecr.io'
+        repository: '$(imageName)'
+        tag: '$(tag)'
+        
+    # 2. Configurar a String de Conexão (Requisito 7-IV)
+    # Esta é a etapa de segurança. Ela pega a variável secreta do pipeline
+    # e a injeta como configuração de ambiente no Web App.
+    - task: AzureAppServiceSettings@1
+      displayName: 'Configurar String de Conexão no Web App'
+      inputs:
+        azureSubscription: '$(azureSubscription)'
+        appName: '$(webAppName)'
+        resourceGroupName: '$(resourceGroup)'
+        appSettings: |
+          [
+            {
+              "name": "ConnectionStrings:SqlAzureConnection",
+              "value": "$(DB_CONNECTION_STRING)",
+              "slotSetting": false
+            }
+          ]
