@@ -55,5 +55,16 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.Run();
+// ===================================================================================
+// CORREÇÃO (Erro 500 no POST/PUT):
+// Aplica as migrations do EF Core automaticamente.
+// Isto garante que o banco de dados no Azure está sempre sincronizado
+// com o código da aplicação (ex: com as chaves primárias corrigidas).
+// ===================================================================================
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<AppDb>();
+    dbContext.Database.Migrate();
+}
 
+app.Run();

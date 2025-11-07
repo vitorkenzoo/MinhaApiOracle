@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\VITOR\\azul\\MinhaApiOracle\\MinhaApiOracle.csproj": {}
+    "C:\\Users\\VITOR\\Maico\\MinhaApiOracle\\MinhaApiOracle.csproj": {}
   },
   "projects": {
-    "C:\\Users\\VITOR\\azul\\MinhaApiOracle\\MinhaApiOracle.csproj": {
+    "C:\\Users\\VITOR\\Maico\\MinhaApiOracle\\MinhaApiOracle.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\VITOR\\azul\\MinhaApiOracle\\MinhaApiOracle.csproj",
+        "projectUniqueName": "C:\\Users\\VITOR\\Maico\\MinhaApiOracle\\MinhaApiOracle.csproj",
         "projectName": "MinhaApiOracle",
-        "projectPath": "C:\\Users\\VITOR\\azul\\MinhaApiOracle\\MinhaApiOracle.csproj",
+        "projectPath": "C:\\Users\\VITOR\\Maico\\MinhaApiOracle\\MinhaApiOracle.csproj",
         "packagesPath": "C:\\Users\\VITOR\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\VITOR\\azul\\MinhaApiOracle\\obj\\",
+        "outputPath": "C:\\Users\\VITOR\\Maico\\MinhaApiOracle\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\VITOR\\AppData\\Roaming\\NuGet\\NuGet.Config"
