@@ -12,8 +12,8 @@ using MinhaApiOracle.Data;
 namespace MinhaApiOracle.Migrations
 {
     [DbContext(typeof(AppDb))]
-    [Migration("20251107004502_MigracaoFinalComTudoCorrigido")]
-    partial class MigracaoFinalComTudoCorrigido
+    [Migration("20251107011540_MigracaoDefinitivaQA")]
+    partial class MigracaoDefinitivaQA
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

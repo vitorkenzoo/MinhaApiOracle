@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace MinhaApiOracle.Migrations
 {
     /// <inheritdoc />
-    public partial class MigracaoFinalComTudoCorrigido : Migration
+    public partial class MigracaoDefinitivaQA : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
